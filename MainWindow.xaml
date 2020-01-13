@@ -1,0 +1,79 @@
+﻿<Window x:Class="DromParser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DromParser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="TextBoxParametersStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="30,0,40,0"></Setter>
+            <Setter Property="Height" Value="25"></Setter>
+        </Style>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="30,0,40,0"></Setter>
+            <Setter Property="Height" Value="15"></Setter>
+        </Style>
+        <Style x:Key="ButtonStart" TargetType="Button">
+            <Setter Property="Foreground" Value="Blue"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Margin" Value="30,20,40,0"></Setter>
+        </Style>
+        <Style x:Key="ButtonStop" TargetType="Button">
+            <Setter Property="Foreground" Value="Red"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="Margin" Value="30,20,40,0"></Setter>
+        </Style>
+        <Style x:Key="ComboBoxParametersStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="30,0,40,0"></Setter>
+            <Setter Property="Height" Value="25"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.7*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="DataSource" Grid.Column="0" ItemsSource="{Binding CarsInformation}" Margin="0,10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5" Grid.Column="0">
+                        <TextBlock TextWrapping="Wrap">
+                            <Hyperlink NavigateUri="{Binding Path=Name}" RequestNavigate="Hyperlink_Click">
+                                    <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Name}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock TextWrapping="Wrap" FontSize="18" Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="550">
+
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Vertical">
+            <TextBlock TextWrapping="Wrap" Text="Минимальная цена" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Path=MinPrice}" TextWrapping="Wrap" Style="{StaticResource TextBoxParametersStyle}"/>
+            <TextBlock TextWrapping="Wrap" Text="Максимальная цена" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Path=MaxPrice}" TextWrapping="Wrap" Style="{StaticResource TextBoxParametersStyle}"/>
+            <TextBlock TextWrapping="Wrap" Text="С какой страницы парсим" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Path=StartPoint}" TextWrapping="Wrap" Style="{StaticResource TextBoxParametersStyle}"/>
+            <TextBlock TextWrapping="Wrap" Text="До какой страницы парсим" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Path=EndPoint}" TextWrapping="Wrap" Style="{StaticResource TextBoxParametersStyle}"/>
+            <TextBlock TextWrapping="Wrap" Text="Марка машины" Style="{StaticResource TextBlockStyle}"/>
+            <ComboBox Style="{StaticResource ComboBoxParametersStyle}" ItemsSource="{Binding ComboBoxCar}" SelectedItem="{Binding Brand}">
+            </ComboBox>
+            <TextBlock TextWrapping="Wrap" Text="Привод" Style="{StaticResource TextBlockStyle}"/>
+            <ComboBox Style="{StaticResource ComboBoxParametersStyle}" ItemsSource="{Binding PrivodCar}" SelectedItem="{Binding Privod}">
+            </ComboBox>
+            <TextBlock TextWrapping="Wrap" Text="Поиск по ключевому слову" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Text="{Binding Path=SearchKey}" TextWrapping="Wrap" Style="{StaticResource TextBoxParametersStyle}"/>
+            <Button Content="Старт" Style="{StaticResource ButtonStart}" Command="{Binding StartingParser}"/>
+            <Button Content="Стоп" Style="{StaticResource ButtonStop}" Command="{Binding StopParsering}"/>
+        </StackPanel>
+    </Grid>
+</Window>
